@@ -151,6 +151,29 @@
   }
 }
 
+/* ── Sidebar close button ── */
+.sidebar-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border-width: 1px;
+  border-style: solid;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+  outline: none;
+}
+.sidebar-close-btn:hover {
+  background-color: oklch(0.93 0.04 5);
+}
+.sidebar-close-btn:focus-visible {
+  outline: 2px solid oklch(0.56 0.11 5);
+  outline-offset: 2px;
+}
+
 /* ── Custom scrollbar ── */
 ::-webkit-scrollbar {
   width: 4px;
