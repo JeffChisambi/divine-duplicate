@@ -5,6 +5,17 @@ import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
 import productsImg from "@/assets/products.jpg";
 import giftsetImg from "@/assets/giftset.jpg";
+import nail1Asset from "@/assets/gallery/nail1.png.asset.json";
+import nail2Asset from "@/assets/gallery/nail2.png.asset.json";
+import nail3Asset from "@/assets/gallery/nail3.png.asset.json";
+import nail6Asset from "@/assets/gallery/nail6.png.asset.json";
+
+const gallery = [
+  { src: nail1Asset.url, title: "Bubblegum Square", tag: "Acrylic · Short", n: "01" },
+  { src: nail2Asset.url, title: "Classic French", tag: "Gel-X · Square", n: "02" },
+  { src: nail3Asset.url, title: "Onyx Tip", tag: "Acrylic · Long", n: "03" },
+  { src: nail6Asset.url, title: "Almond French", tag: "Gel · Almond", n: "04" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
