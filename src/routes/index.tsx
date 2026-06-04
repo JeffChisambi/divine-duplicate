@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Search, CalendarDays } from "lucide-react";
+import { ArrowRight, Search, CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+
 import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
 import productsImg from "@/assets/products.jpg";
