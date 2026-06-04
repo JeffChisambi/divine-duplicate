@@ -6,16 +6,11 @@ import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
 import productsImg from "@/assets/products.jpg";
 import giftsetImg from "@/assets/giftset.jpg";
-import nail1Asset from "@/assets/gallery/nail1.png.asset.json";
-import nail2Asset from "@/assets/gallery/nail2.png.asset.json";
-import nail3Asset from "@/assets/gallery/nail3.png.asset.json";
-import nail6Asset from "@/assets/gallery/nail6.png.asset.json";
-
 const gallery = [
-  { src: nail1Asset.url, title: "Bubblegum Square", tag: "Acrylic · Short", n: "01" },
-  { src: nail2Asset.url, title: "Classic French", tag: "Gel-X · Square", n: "02" },
-  { src: nail3Asset.url, title: "Onyx Tip", tag: "Acrylic · Long", n: "03" },
-  { src: nail6Asset.url, title: "Almond French", tag: "Gel · Almond", n: "04" },
+  { src: "/gallery/nail1.jpg", title: "Bubblegum Square", tag: "Acrylic · Short", n: "01" },
+  { src: "/gallery/nail2.jpg", title: "Classic French", tag: "Gel-X · Square", n: "02" },
+  { src: "/gallery/nail3.jpg", title: "Onyx Tip", tag: "Acrylic · Long", n: "03" },
+  { src: "/gallery/nail4.jpg", title: "Almond French", tag: "Gel · Almond", n: "04" },
 ];
 
 export const Route = createFileRoute("/")({
@@ -612,7 +607,7 @@ function Index() {
         <Reveal variant="up" delay={150} duration={800}>
           <form
             onSubmit={handleSubmit}
-            className="mt-10 max-w-3xl mx-auto bg-white rounded-sm p-8 md:p-10 shadow-sm"
+            className="mt-10 max-w-3xl mx-auto bg-white p-8 md:p-10 shadow-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <Field label="First Name *">
@@ -648,14 +643,14 @@ function Index() {
                 </Field>
               </div>
             </div>
-            <button type="submit" style={{ backgroundColor: blue }} className="mt-8 w-full inline-flex items-center justify-center gap-3 rounded-full px-6 py-3 text-white text-xs tracking-[0.18em] hover:opacity-90 transition">
+            <button type="submit" style={{ backgroundColor: blue }} className="mt-8 w-full inline-flex items-center justify-center gap-3 px-6 py-3 text-white text-xs tracking-[0.18em] hover:opacity-90 transition">
               SEND BOOKING REQUEST <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
         </Reveal>
 
         <style>{`
-          .form-input { width:100%; border:1px solid ${sageSoft}; border-radius:2px; padding:0.65rem 0.85rem; font-size:0.875rem; font-family:var(--font-sans); color:var(--color-foreground); background-color:white; outline:none; transition:border-color .15s; }
+          .form-input { width:100%; border:1px solid ${sageSoft}; border-radius:0; padding:0.65rem 0.85rem; font-size:0.875rem; font-family:var(--font-sans); color:var(--color-foreground); background-color:white; outline:none; transition:border-color .15s; }
           .form-input:focus { border-color:${sage}; }
         `}</style>
       </section>
