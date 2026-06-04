@@ -91,6 +91,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "preload",
+        href: "/heroshot.png",
+        as: "image",
+        type: "image/png",
+        fetchpriority: "high",
+      },
     ],
   }),
   shellComponent: RootShell,

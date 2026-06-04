@@ -397,7 +397,7 @@ function Index() {
           </h1>
 
           <div className="relative z-0 flex justify-center pt-8 hero-image-animate">
-            <img src={heroSvg} alt="Elegant manicured hand with floral nail art" className="w-full max-w-3xl h-auto" />
+            <img src={heroSvg} alt="Elegant manicured hand with floral nail art" className="w-full max-w-3xl h-auto" fetchPriority="high" decoding="async" loading="eager" />
           </div>
 
           <div className="relative md:absolute md:left-10 md:bottom-24 max-w-xs text-white z-20 mt-8 md:mt-0 hero-tagline-animate">
@@ -416,7 +416,7 @@ function Index() {
 
           <div className="relative md:absolute md:right-10 md:bottom-10 w-full md:w-[300px] z-20 mt-10 md:mt-0 hero-card-animate">
             <div className="bg-white rounded-sm overflow-hidden shadow-sm">
-              <img src="/heroshot.png" alt="Signature Gel-X nail set" width={768} height={512} loading="lazy" className="w-full h-44 object-cover" />
+              <img src="/heroshot.png" alt="Signature Gel-X nail set" width={768} height={512} loading="eager" fetchPriority="high" decoding="async" className="w-full h-44 object-cover" />
             </div>
             <div className="mt-3 text-white">
               <div className="flex justify-between items-baseline text-sm">
@@ -505,7 +505,7 @@ function Index() {
             <img
               src="/about.png"
               alt="Inside Olivia's home nail studio"
-              width={1536} height={576} loading="lazy"
+              width={1536} height={576} loading="lazy" decoding="async"
               className="w-full h-auto rounded-sm object-cover aspect-[4/3]"
             />
           </Reveal>
@@ -588,7 +588,7 @@ function Index() {
                       onClick={() => !isCenter && setGalleryIdx(i)}
                     >
                       <div className="cf-frame">
-                        <img src={g.src} alt={g.title} loading="lazy" />
+                        <img src={g.src} alt={g.title} loading="lazy" decoding="async" />
                         <span className="cf-num" style={{ fontFamily: "var(--font-serif)" }}>{g.n}</span>
                       </div>
                     </figure>
