@@ -291,40 +291,42 @@ function Index() {
                 <X strokeWidth={1.25} className="w-4 h-4" />
               </button>
             </div>
-            <div className="px-7 pb-8">
-              <p style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 32, lineHeight: 1.1 }} className={`font-light tracking-wide sidebar-brand${menuOpen ? " is-open" : ""}`}>
-                Olivia's<br /><span className="italic" style={{ color: sage }}>Nails.</span>
-              </p>
-              <div className="mt-3 h-px sidebar-divider" style={{ backgroundColor: sageSoft }} />
-            </div>
-            <nav className="px-7 flex flex-col gap-1">
-              {navLinks.map((link, i) => (
-                <a key={link.href} href={link.href} onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                  className={`sidebar-nav-link${menuOpen ? " is-open" : ""}`}
-                  style={{ animationDelay: menuOpen ? `${120 + i * 65}ms` : "0ms", fontFamily: "var(--font-serif)", color: blue }}>
-                  <span className="sidebar-nav-num" style={{ color: sage }}>0{i + 1}</span>
-                  <span className="sidebar-nav-text">{link.label}</span>
-                  <span className="sidebar-nav-arrow" style={{ color: sage }}>→</span>
+            <div className="sidebar-scroll-area">
+              <div className="px-7 pb-6">
+                <p style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 32, lineHeight: 1.1 }} className={`font-light tracking-wide sidebar-brand${menuOpen ? " is-open" : ""}`}>
+                  Olivia's<br /><span className="italic" style={{ color: sage }}>Nails.</span>
+                </p>
+                <div className="mt-3 h-px sidebar-divider" style={{ backgroundColor: sageSoft }} />
+              </div>
+              <nav className="px-7 flex flex-col gap-0">
+                {navLinks.map((link, i) => (
+                  <a key={link.href} href={link.href} onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                    className={`sidebar-nav-link${menuOpen ? " is-open" : ""}`}
+                    style={{ animationDelay: menuOpen ? `${120 + i * 65}ms` : "0ms", fontFamily: "var(--font-serif)", color: blue }}>
+                    <span className="sidebar-nav-num" style={{ color: sage }}>0{i + 1}</span>
+                    <span className="sidebar-nav-text">{link.label}</span>
+                    <span className="sidebar-nav-arrow" style={{ color: sage }}>→</span>
+                  </a>
+                ))}
+              </nav>
+              <div className={`px-7 mt-8 sidebar-flourish${menuOpen ? " is-open" : ""}`}>
+                <div className="h-px mb-5" style={{ backgroundColor: sageSoft }} />
+                <p style={{ fontFamily: "var(--font-serif)", color: sage, fontSize: 13 }} className="italic leading-relaxed opacity-80">
+                  "Timeless nails, crafted<br />with intention."
+                </p>
+              </div>
+              <div className={`px-7 mt-6 sidebar-cta${menuOpen ? " is-open" : ""}`}>
+                <a href="#book" onClick={(e) => { e.preventDefault(); handleNavClick("#book"); }} className="sidebar-book-btn" style={{ backgroundColor: blue }}>
+                  Book Appointment <ArrowRight className="w-3.5 h-3.5" />
                 </a>
-              ))}
-            </nav>
-            <div className={`px-7 mt-10 sidebar-flourish${menuOpen ? " is-open" : ""}`}>
-              <div className="h-px mb-6" style={{ backgroundColor: sageSoft }} />
-              <p style={{ fontFamily: "var(--font-serif)", color: sage, fontSize: 13 }} className="italic leading-relaxed opacity-80">
-                "Timeless nails, crafted<br />with intention."
-              </p>
-            </div>
-            <div className={`px-7 mt-8 sidebar-cta${menuOpen ? " is-open" : ""}`}>
-              <a href="#book" onClick={(e) => { e.preventDefault(); handleNavClick("#book"); }} className="sidebar-book-btn" style={{ backgroundColor: blue }}>
-                Book Appointment <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-            <div className={`px-7 mt-6 sidebar-location${menuOpen ? " is-open" : ""}`}>
-              <p className="text-[10px] tracking-[0.2em] opacity-60 uppercase" style={{ color: blue }}>✦ Kelvin, Woodmead · Sandton</p>
-              <p className="text-[11px] mt-1 opacity-50" style={{ color: blue }}>+27 78 038 9060</p>
-            </div>
-            <div className="sidebar-bottom-decor" style={{ fontFamily: "var(--font-serif)", color: sageSoft }}>
-              <span className="text-[80px] font-light leading-none select-none">✦</span>
+              </div>
+              <div className={`px-7 mt-5 pb-8 sidebar-location${menuOpen ? " is-open" : ""}`}>
+                <p className="text-[10px] tracking-[0.2em] opacity-60 uppercase" style={{ color: blue }}>✦ Kelvin, Woodmead · Sandton</p>
+                <p className="text-[11px] mt-1 opacity-50" style={{ color: blue }}>+27 78 038 9060</p>
+              </div>
+              <div className="sidebar-bottom-decor" style={{ fontFamily: "var(--font-serif)", color: sageSoft }}>
+                <span className="text-[80px] font-light leading-none select-none">✦</span>
+              </div>
             </div>
           </aside>
         </>
@@ -890,6 +892,8 @@ function Index() {
 
         /* ── Sidebar panel ── */
         .mobile-sidebar { position:fixed; top:0; right:0; bottom:0; z-index:100; width:min(320px,85vw); background:#fff; display:flex; flex-direction:column; overflow:hidden; transform:translateX(100%); transition:transform 0.5s cubic-bezier(.16,1,.3,1); box-shadow:-12px 0 60px rgba(0,0,0,.12),-2px 0 12px rgba(0,0,0,.06); }
+        .sidebar-scroll-area { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+        .sidebar-scroll-area::-webkit-scrollbar { display:none; }
         .mobile-sidebar.is-open { transform:translateX(0); }
         .sidebar-accent-line { height:3px; flex-shrink:0; transform-origin:left; animation:accent-grow 0.7s 0.3s cubic-bezier(.16,1,.3,1) both; }
         @keyframes accent-grow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
