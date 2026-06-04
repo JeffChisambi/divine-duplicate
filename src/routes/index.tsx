@@ -231,14 +231,44 @@ function Index() {
   const [form, setForm] = useState({
     firstName: "", phone: "", email: "", service: "", date: "", time: "", notes: "",
   });
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadTime] = useState(() => Date.now());
+
+  const WHATSAPP_NUMBER = "27780389060";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot — bots fill hidden fields, humans don't
+    if (honeypot) return;
+
+    // Submissions faster than 3 seconds are almost certainly bots
+    if (Date.now() - formLoadTime < 3000) {
+      toast.error("Please slow down and try again.");
+      return;
+    }
+
     if (!form.firstName || !form.phone || !form.service || !form.date) {
       toast.error("Please fill in the required fields.");
       return;
     }
-    toast.success("Booking request sent! Olivia will confirm via WhatsApp shortly.");
+
+    const lines = [
+      "👋 *New Booking Request — Olivia's Nails*",
+      "",
+      `*Name:* ${form.firstName}`,
+      `*Phone:* ${form.phone}`,
+      form.email ? `*Email:* ${form.email}` : null,
+      `*Service:* ${form.service}`,
+      `*Date:* ${form.date}`,
+      form.time ? `*Time:* ${form.time}` : null,
+      form.notes ? `*Notes:* ${form.notes}` : null,
+    ].filter(Boolean).join("\n");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+
+    toast.success("Opening WhatsApp — your booking is ready to send!");
     setForm({ firstName: "", phone: "", email: "", service: "", date: "", time: "", notes: "" });
   };
 
@@ -630,6 +660,11 @@ function Index() {
             onSubmit={handleSubmit}
             className="mt-10 max-w-3xl mx-auto bg-white p-8 md:p-10 shadow-sm"
           >
+            {/* Honeypot — visually hidden, only bots fill this */}
+            <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }} aria-hidden="true" tabIndex={-1}>
+              <input type="text" name="website" autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <Field label="First Name *">
                 <input required value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} placeholder="Your name" className="form-input" />
