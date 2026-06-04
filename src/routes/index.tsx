@@ -291,113 +291,197 @@ function Index() {
             </p>
           </div>
 
-          {/* Staggered tilted gallery */}
-          <div className="gallery-stage">
-            {gallery.map((g, i) => (
-              <figure
-                key={g.n}
-                className={`gallery-card g-${i}`}
-                style={{ ['--delay' as string]: `${i * 0.15}s` }}
-              >
-                <div className="gallery-frame">
-                  <img src={g.src} alt={g.title} loading="lazy" />
-                  <div className="gallery-veil" />
-                  <span className="gallery-num" style={{ fontFamily: "var(--font-serif)" }}>{g.n}</span>
-                </div>
-                <figcaption>
-                  <span style={{ fontFamily: "var(--font-serif)", color: blue }} className="block text-lg">
-                    {g.title}
-                  </span>
-                  <span className="block text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color: sage }}>
-                    {g.tag}
-                  </span>
-                </figcaption>
-              </figure>
-            ))}
+          {/* Coverflow carousel */}
+          <div className="coverflow-stage">
+            <button
+              type="button"
+              aria-label="Previous"
+              onClick={prevG}
+              className="cf-arrow cf-arrow-left"
+            >
+              <ChevronLeft strokeWidth={1.25} />
+            </button>
+
+            <div className="coverflow-track">
+              {gallery.map((g, i) => {
+                const n = gallery.length;
+                let offset = i - galleryIdx;
+                if (offset > n / 2) offset -= n;
+                if (offset < -n / 2) offset += n;
+                const abs = Math.abs(offset);
+                const isCenter = offset === 0;
+                const translateX = offset * 180;
+                const rotateY = offset * -28;
+                const scale = isCenter ? 1 : 0.78 - (abs - 1) * 0.08;
+                const z = 100 - abs;
+                const opacity = abs > 2 ? 0 : 1;
+                return (
+                  <figure
+                    key={g.n}
+                    className={`cf-card${isCenter ? " is-center" : ""}`}
+                    style={{
+                      transform: `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) scale(${scale})`,
+                      zIndex: z,
+                      opacity,
+                      pointerEvents: abs > 1 ? "none" : "auto",
+                    }}
+                    onClick={() => !isCenter && setGalleryIdx(i)}
+                  >
+                    <div className="cf-frame">
+                      <img src={g.src} alt={g.title} loading="lazy" />
+                      <span className="cf-num" style={{ fontFamily: "var(--font-serif)" }}>
+                        {g.n}
+                      </span>
+                    </div>
+                  </figure>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              aria-label="Next"
+              onClick={nextG}
+              className="cf-arrow cf-arrow-right"
+            >
+              <ChevronRight strokeWidth={1.25} />
+            </button>
           </div>
 
-          <div className="mt-16 flex items-center justify-center gap-6 text-[10px] tracking-[0.3em] uppercase" style={{ color: sage }}>
-            <span className="h-px w-12" style={{ backgroundColor: sage }} />
-            <span>Hand-finished in Sandton</span>
-            <span className="h-px w-12" style={{ backgroundColor: sage }} />
+          {/* Caption */}
+          <div className="mt-10 text-center">
+            <span
+              style={{ fontFamily: "var(--font-serif)", color: blue }}
+              className="block italic text-2xl"
+            >
+              {gallery[galleryIdx].title}
+            </span>
+            <span
+              className="block text-[10px] tracking-[0.3em] uppercase mt-2"
+              style={{ color: sage }}
+            >
+              {gallery[galleryIdx].tag}
+            </span>
+          </div>
+
+          {/* Dots */}
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {gallery.map((g, i) => (
+              <button
+                key={g.n}
+                type="button"
+                aria-label={`Go to ${g.title}`}
+                onClick={() => setGalleryIdx(i)}
+                className="cf-dot"
+                style={{
+                  backgroundColor: i === galleryIdx ? blue : sageSoft,
+                  width: i === galleryIdx ? 24 : 8,
+                }}
+              />
+            ))}
           </div>
         </div>
 
         <style>{`
-          .gallery-stage {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            min-height: 640px;
-            perspective: 1400px;
-          }
-          .gallery-card {
+          .coverflow-stage {
             position: relative;
-            transition: transform .9s cubic-bezier(.2,.8,.2,1), z-index 0s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 520px;
+            perspective: 1600px;
+          }
+          .coverflow-track {
+            position: relative;
+            width: 100%;
+            height: 500px;
             transform-style: preserve-3d;
-            animation: floatY 7s ease-in-out infinite;
-            animation-delay: var(--delay);
+          }
+          .cf-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: clamp(220px, 28vw, 340px);
+            margin: 0;
+            cursor: pointer;
+            transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity .6s ease;
+            transform-origin: center center;
             will-change: transform;
           }
-          .gallery-card.g-0 { grid-column: 1 / span 5; transform: rotate(-6deg) translateY(20px); }
-          .gallery-card.g-1 { grid-column: 6 / span 4; transform: rotate(4deg) translateY(-30px); margin-top: 3rem; }
-          .gallery-card.g-2 { grid-column: 1 / span 4; transform: rotate(3deg) translateY(0); margin-top: -2rem; }
-          .gallery-card.g-3 { grid-column: 5 / span 7; transform: rotate(-3deg) translateY(10px); }
-          @media (max-width: 768px) {
-            .gallery-stage { display: flex; flex-direction: column; gap: 3rem; min-height: 0; }
-            .gallery-card, .gallery-card.g-0, .gallery-card.g-1, .gallery-card.g-2, .gallery-card.g-3 {
-              grid-column: auto; margin: 0; transform: rotate(-3deg);
-            }
-            .gallery-card:nth-child(even) { transform: rotate(3deg); align-self: flex-end; width: 85%; }
-            .gallery-card:nth-child(odd) { width: 85%; }
-          }
-          .gallery-frame {
+          .cf-frame {
             position: relative;
-            overflow: hidden;
-            background: ${sageSoft};
-            box-shadow: 0 20px 50px -25px rgba(0,0,0,.35), 0 4px 12px -6px rgba(0,0,0,.15);
-            aspect-ratio: 4 / 5;
+            background: white;
+            padding: 14px 14px 18px;
+            box-shadow: 0 30px 60px -25px rgba(0,0,0,.45), 0 8px 20px -10px rgba(0,0,0,.2);
+            border: 1px solid ${sageSoft};
           }
-          .gallery-card.g-1 .gallery-frame { aspect-ratio: 3 / 4; }
-          .gallery-card.g-3 .gallery-frame { aspect-ratio: 16 / 10; }
-          .gallery-frame img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 1.2s cubic-bezier(.2,.8,.2,1), filter .8s ease;
-            filter: saturate(.92) contrast(1.02);
-          }
-          .gallery-veil {
-            position: absolute; inset: 0;
-            background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.35));
-            opacity: .7; transition: opacity .6s ease;
+          .cf-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
             pointer-events: none;
           }
-          .gallery-num {
-            position: absolute; top: 1rem; left: 1.1rem;
-            color: white; font-size: 13px; letter-spacing: .25em;
-            mix-blend-mode: difference; opacity: .85;
+          .cf-frame img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            filter: saturate(.92);
+            transition: filter .6s ease;
           }
-          .gallery-card figcaption {
-            position: absolute; left: 1.25rem; bottom: -2.75rem;
-            opacity: 0; transform: translateY(-6px);
-            transition: opacity .5s ease, transform .5s ease;
+          .cf-card.is-center .cf-frame img { filter: saturate(1.05) contrast(1.03); }
+          .cf-card.is-center .cf-frame {
+            box-shadow: 0 40px 80px -25px rgba(0,0,0,.55), 0 12px 28px -10px rgba(0,0,0,.25);
           }
-          .gallery-card:hover {
-            transform: rotate(0deg) translateY(-12px) scale(1.04);
-            z-index: 20;
-            animation-play-state: paused;
+          .cf-num {
+            position: absolute;
+            top: 22px;
+            left: 24px;
+            color: white;
+            font-size: 12px;
+            letter-spacing: .3em;
+            mix-blend-mode: difference;
+            opacity: .9;
           }
-          .gallery-card:hover .gallery-frame img { transform: scale(1.08); filter: saturate(1.08) contrast(1.04); }
-          .gallery-card:hover .gallery-veil { opacity: .25; }
-          .gallery-card:hover figcaption { opacity: 1; transform: translateY(0); }
-          @keyframes floatY {
-            0%, 100% { translate: 0 0; }
-            50% { translate: 0 -10px; }
+          .cf-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            border: 1px solid ${sageSoft};
+            background: white;
+            color: ${blue};
+            transition: background .3s ease, color .3s ease, transform .3s ease;
+            cursor: pointer;
+          }
+          .cf-arrow:hover { background: ${blue}; color: white; transform: translateY(-50%) scale(1.05); }
+          .cf-arrow-left { left: 0; }
+          .cf-arrow-right { right: 0; }
+          .cf-dot {
+            height: 8px;
+            border-radius: 9999px;
+            border: 0;
+            cursor: pointer;
+            transition: width .4s ease, background-color .4s ease;
+          }
+          @media (max-width: 640px) {
+            .coverflow-stage { min-height: 440px; }
+            .coverflow-track { height: 420px; }
+            .cf-card { width: 62vw; }
           }
           @media (prefers-reduced-motion: reduce) {
-            .gallery-card { animation: none; }
+            .cf-card { transition: opacity .3s ease; }
           }
         `}</style>
       </section>
+
 
 
 
