@@ -5,6 +5,17 @@ import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
 import productsImg from "@/assets/products.jpg";
 import giftsetImg from "@/assets/giftset.jpg";
+import nail1Asset from "@/assets/gallery/nail1.png.asset.json";
+import nail2Asset from "@/assets/gallery/nail2.png.asset.json";
+import nail3Asset from "@/assets/gallery/nail3.png.asset.json";
+import nail6Asset from "@/assets/gallery/nail6.png.asset.json";
+
+const gallery = [
+  { src: nail1Asset.url, title: "Bubblegum Square", tag: "Acrylic · Short", n: "01" },
+  { src: nail2Asset.url, title: "Classic French", tag: "Gel-X · Square", n: "02" },
+  { src: nail3Asset.url, title: "Onyx Tip", tag: "Acrylic · Long", n: "03" },
+  { src: nail6Asset.url, title: "Almond French", tag: "Gel · Almond", n: "04" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -89,6 +100,7 @@ function Index() {
             <li><a href="#home">HOME</a></li>
             <li><a href="#services">SERVICES</a></li>
             <li><a href="#about">ABOUT</a></li>
+            <li><a href="#gallery">GALLERY</a></li>
             <li><a href="#book">BOOK</a></li>
             <li><a href="#contact">CONTACT</a></li>
           </ul>
@@ -252,6 +264,137 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* Gallery — artistic staggered showcase */}
+      <section id="gallery" className="relative overflow-hidden px-6 md:px-10 py-24 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+            <div>
+              <p className="text-[10px] tracking-[0.2em] mb-4" style={{ color: sage }}>
+                ✦ THE GALLERY
+              </p>
+              <h2
+                style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 56, lineHeight: 0.95 }}
+                className="font-light tracking-wide"
+              >
+                A study in<br />
+                <span className="italic" style={{ color: sage }}>finesse.</span>
+              </h2>
+            </div>
+            <p className="text-sm text-foreground/70 max-w-sm leading-relaxed">
+              An evolving archive of recent sets — each one shaped by hand, finished with intention. Hover to bring a piece into focus.
+            </p>
+          </div>
+
+          {/* Staggered tilted gallery */}
+          <div className="gallery-stage">
+            {gallery.map((g, i) => (
+              <figure
+                key={g.n}
+                className={`gallery-card g-${i}`}
+                style={{ ['--delay' as string]: `${i * 0.15}s` }}
+              >
+                <div className="gallery-frame">
+                  <img src={g.src} alt={g.title} loading="lazy" />
+                  <div className="gallery-veil" />
+                  <span className="gallery-num" style={{ fontFamily: "var(--font-serif)" }}>{g.n}</span>
+                </div>
+                <figcaption>
+                  <span style={{ fontFamily: "var(--font-serif)", color: blue }} className="block text-lg">
+                    {g.title}
+                  </span>
+                  <span className="block text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color: sage }}>
+                    {g.tag}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="mt-16 flex items-center justify-center gap-6 text-[10px] tracking-[0.3em] uppercase" style={{ color: sage }}>
+            <span className="h-px w-12" style={{ backgroundColor: sage }} />
+            <span>Hand-finished in Sandton</span>
+            <span className="h-px w-12" style={{ backgroundColor: sage }} />
+          </div>
+        </div>
+
+        <style>{`
+          .gallery-stage {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            min-height: 640px;
+            perspective: 1400px;
+          }
+          .gallery-card {
+            position: relative;
+            transition: transform .9s cubic-bezier(.2,.8,.2,1), z-index 0s;
+            transform-style: preserve-3d;
+            animation: floatY 7s ease-in-out infinite;
+            animation-delay: var(--delay);
+            will-change: transform;
+          }
+          .gallery-card.g-0 { grid-column: 1 / span 5; transform: rotate(-6deg) translateY(20px); }
+          .gallery-card.g-1 { grid-column: 6 / span 4; transform: rotate(4deg) translateY(-30px); margin-top: 3rem; }
+          .gallery-card.g-2 { grid-column: 1 / span 4; transform: rotate(3deg) translateY(0); margin-top: -2rem; }
+          .gallery-card.g-3 { grid-column: 5 / span 7; transform: rotate(-3deg) translateY(10px); }
+          @media (max-width: 768px) {
+            .gallery-stage { display: flex; flex-direction: column; gap: 3rem; min-height: 0; }
+            .gallery-card, .gallery-card.g-0, .gallery-card.g-1, .gallery-card.g-2, .gallery-card.g-3 {
+              grid-column: auto; margin: 0; transform: rotate(-3deg);
+            }
+            .gallery-card:nth-child(even) { transform: rotate(3deg); align-self: flex-end; width: 85%; }
+            .gallery-card:nth-child(odd) { width: 85%; }
+          }
+          .gallery-frame {
+            position: relative;
+            overflow: hidden;
+            background: ${sageSoft};
+            box-shadow: 0 20px 50px -25px rgba(0,0,0,.35), 0 4px 12px -6px rgba(0,0,0,.15);
+            aspect-ratio: 4 / 5;
+          }
+          .gallery-card.g-1 .gallery-frame { aspect-ratio: 3 / 4; }
+          .gallery-card.g-3 .gallery-frame { aspect-ratio: 16 / 10; }
+          .gallery-frame img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 1.2s cubic-bezier(.2,.8,.2,1), filter .8s ease;
+            filter: saturate(.92) contrast(1.02);
+          }
+          .gallery-veil {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.35));
+            opacity: .7; transition: opacity .6s ease;
+            pointer-events: none;
+          }
+          .gallery-num {
+            position: absolute; top: 1rem; left: 1.1rem;
+            color: white; font-size: 13px; letter-spacing: .25em;
+            mix-blend-mode: difference; opacity: .85;
+          }
+          .gallery-card figcaption {
+            position: absolute; left: 1.25rem; bottom: -2.75rem;
+            opacity: 0; transform: translateY(-6px);
+            transition: opacity .5s ease, transform .5s ease;
+          }
+          .gallery-card:hover {
+            transform: rotate(0deg) translateY(-12px) scale(1.04);
+            z-index: 20;
+            animation-play-state: paused;
+          }
+          .gallery-card:hover .gallery-frame img { transform: scale(1.08); filter: saturate(1.08) contrast(1.04); }
+          .gallery-card:hover .gallery-veil { opacity: .25; }
+          .gallery-card:hover figcaption { opacity: 1; transform: translateY(0); }
+          @keyframes floatY {
+            0%, 100% { translate: 0 0; }
+            50% { translate: 0 -10px; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .gallery-card { animation: none; }
+          }
+        `}</style>
+      </section>
+
+
 
       {/* Booking */}
       <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: sage }}>
