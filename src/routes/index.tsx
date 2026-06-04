@@ -11,6 +11,20 @@ const gallery = [
   { src: "/gallery/nail2.jpg", title: "Classic French", tag: "Gel-X · Square", n: "02" },
   { src: "/gallery/nail3.jpg", title: "Onyx Tip", tag: "Acrylic · Long", n: "03" },
   { src: "/gallery/nail4.jpg", title: "Almond French", tag: "Gel · Almond", n: "04" },
+  { src: "/gallery/nail5.webp", title: "Red Plaid Art", tag: "Acrylic · Long Square", n: "05" },
+  { src: "/gallery/nail6.webp", title: "Black Bow Set", tag: "Gel-X · Almond", n: "06" },
+  { src: "/gallery/nail7.webp", title: "Sunshine Hibiscus", tag: "Gel · Almond", n: "07" },
+  { src: "/gallery/nail8.webp", title: "Black French Gems", tag: "Acrylic · Stiletto", n: "08" },
+  { src: "/gallery/nail9.webp", title: "White French Square", tag: "Acrylic · Square", n: "09" },
+  { src: "/gallery/nail10.webp", title: "Noir French Square", tag: "Gel-X · Square", n: "10" },
+  { src: "/gallery/nail11.webp", title: "Yellow Sunflower", tag: "Gel · Almond", n: "11" },
+  { src: "/gallery/nail12.webp", title: "Nude Peach Set", tag: "Acrylic · Square", n: "12" },
+  { src: "/gallery/nail13.webp", title: "Lavender Almond", tag: "Polygel · Almond", n: "13" },
+  { src: "/gallery/nail14.webp", title: "White French Stiletto", tag: "Gel-X · Stiletto", n: "14" },
+  { src: "/gallery/nail15.webp", title: "Gold French Art", tag: "Acrylic · Almond", n: "15" },
+  { src: "/gallery/nail16.webp", title: "Burgundy French", tag: "Gel · Almond", n: "16" },
+  { src: "/gallery/nail17.webp", title: "Baby Pink Marble", tag: "Rubber Base · Almond", n: "17" },
+  { src: "/gallery/nail18.webp", title: "Pink French Square", tag: "Acrylic · Square", n: "18" },
 ];
 
 export const Route = createFileRoute("/")({
