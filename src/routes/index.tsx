@@ -287,7 +287,7 @@ function Index() {
             <div className="sidebar-accent-line" style={{ backgroundColor: sage }} />
             <div className="flex items-center justify-between px-7 pt-8 pb-6">
               <span style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.3em] uppercase">✦ Menu</span>
-              <button type="button" onClick={closeMenu} className="sidebar-close-btn text-white hover:bg-[#7a2942] focus:outline-none focus-visible:outline-none bg-[#90314e]" aria-label="Close menu" style={{ borderColor: "#90314e" }}>
+              <button type="button" onClick={closeMenu} className="sidebar-close-btn focus:outline-none focus-visible:outline-none" aria-label="Close menu">
                 <X strokeWidth={1.25} className="w-4 h-4" />
               </button>
             </div>
@@ -893,8 +893,8 @@ function Index() {
         .mobile-sidebar.is-open { transform:translateX(0); }
         .sidebar-accent-line { height:3px; flex-shrink:0; transform-origin:left; animation:accent-grow 0.7s 0.3s cubic-bezier(.16,1,.3,1) both; }
         @keyframes accent-grow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
-        .sidebar-close-btn { width:36px; height:36px; border-radius:50%; border:1px solid; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s ease,color 0.2s ease,transform 0.3s ease; }
-        .sidebar-close-btn:hover { background:oklch(0.5 0.14 250); color:white; border-color:oklch(0.5 0.14 250); transform:rotate(90deg); }
+        .sidebar-close-btn { width:36px; height:36px; border-radius:50%; border:1px solid #90314e; background:#90314e; color:white; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s ease,border-color 0.2s ease,transform 0.3s ease; }
+        .sidebar-close-btn:hover { background:#7a2942; border-color:#7a2942; transform:rotate(90deg); }
         .sidebar-brand { opacity:0; transform:translateY(14px); transition:opacity 0.55s 0.18s ease,transform 0.55s 0.18s cubic-bezier(.16,1,.3,1); }
         .sidebar-brand.is-open { opacity:1; transform:translateY(0); }
         .sidebar-divider { transform-origin:left; transform:scaleX(0); transition:transform 0.6s 0.28s cubic-bezier(.16,1,.3,1); }
