@@ -498,15 +498,15 @@ function Index() {
                   const translateX = offset * 180;
                   const rotateY = offset * -28;
                   const scale = isCenter ? 1 : 0.78 - (abs - 1) * 0.08;
-                  const z = 100 - abs;
+                  const translateZ = isCenter ? 150 : Math.max(0, 90 - abs * 55);
                   const opacity = abs > 2 ? 0 : 1;
                   return (
                     <figure
                       key={g.n}
                       className={`cf-card${isCenter ? " is-center" : ""}`}
                       style={{
-                        transform: `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) scale(${scale})`,
-                        zIndex: z, opacity, pointerEvents: abs > 1 ? "none" : "auto",
+                        transform: `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`,
+                        opacity, pointerEvents: abs > 1 ? "none" : "auto",
                       }}
                       onClick={() => !isCenter && setGalleryIdx(i)}
                     >
