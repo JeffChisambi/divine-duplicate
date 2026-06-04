@@ -63,12 +63,12 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { n: "01", icon: "💅", title: "Acrylic Nails", desc: "Durable, long-lasting acrylic sets in any shape or length. Natural or dramatic." },
-  { n: "02", icon: "🌷", title: "Rubber Base", desc: "A flexible, protective rubber base gel that strengthens natural nails with a flawless finish." },
-  { n: "03", icon: "✨", title: "Polygel", desc: "A lightweight hybrid between acrylic and gel — buildable, odourless, and incredibly strong." },
-  { n: "04", icon: "🌸", title: "Gel-X", desc: "Soft gel nail extensions that are gentle on natural nails. Perfect for added length." },
-  { n: "05", icon: "🤍", title: "Manicure", desc: "A classic hand and nail treatment with shaping, cuticle care, and your choice of polish." },
-  { n: "06", icon: "🌺", title: "Pedicure", desc: "A relaxing foot treatment with soak, exfoliation, nail shaping, and polish." },
+  { n: "01", img: "/gallery/nail18.webp", title: "Acrylic Nails", desc: "Durable, long-lasting acrylic sets in any shape or length. Natural or dramatic." },
+  { n: "02", img: "/gallery/nail17.webp", title: "Rubber Base", desc: "A flexible, protective rubber base gel that strengthens natural nails with a flawless finish." },
+  { n: "03", img: "/gallery/nail13.webp", title: "Polygel", desc: "A lightweight hybrid between acrylic and gel — buildable, odourless, and incredibly strong." },
+  { n: "04", img: "/gallery/nail14.webp", title: "Gel-X", desc: "Soft gel nail extensions that are gentle on natural nails. Perfect for added length." },
+  { n: "05", img: "/gallery/nail2.jpg",   title: "Manicure", desc: "A classic hand and nail treatment with shaping, cuticle care, and your choice of polish." },
+  { n: "06", img: "/gallery/nail19.jpg",  title: "Pedicure", desc: "A relaxing foot treatment with soak, exfoliation, nail shaping, and polish." },
 ];
 
 const aboutPoints = [
@@ -467,16 +467,18 @@ function Index() {
             <div className="grid grid-cols-2 gap-4 mb-4 items-start">
               {services.slice(0, 2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={i * 100} as="article"
-                  className="p-6 flex flex-col gap-3 transition hover:shadow-lg"
+                  className="flex flex-col overflow-hidden transition hover:shadow-lg"
                   style={{
                     backgroundColor: sageSoft,
                     marginTop: i === 1 ? 28 : 0,
                   }}>
-                  <div className="text-3xl" aria-hidden>{s.icon}</div>
-                  <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[11px] tracking-[0.25em]">{s.n}</div>
-                  <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 22, lineHeight: 1.2 }} className="font-light">{s.title}</h3>
-                  <div className="h-px" style={{ backgroundColor: `oklch(0.56 0.11 5 / 0.18)` }} />
-                  <p className="text-xs leading-relaxed text-foreground/70">{s.desc}</p>
+                  <img src={s.img} alt={s.title} loading="lazy" decoding="async" className="w-full h-44 object-cover" />
+                  <div className="p-6 flex flex-col gap-3">
+                    <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[11px] tracking-[0.25em]">{s.n}</div>
+                    <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 22, lineHeight: 1.2 }} className="font-light">{s.title}</h3>
+                    <div className="h-px" style={{ backgroundColor: `oklch(0.56 0.11 5 / 0.18)` }} />
+                    <p className="text-xs leading-relaxed text-foreground/70">{s.desc}</p>
+                  </div>
                 </Reveal>
               ))}
             </div>
@@ -485,12 +487,14 @@ function Index() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {services.slice(2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={200 + i * 70} as="article"
-                  className="p-4 border transition hover:shadow-md hover:-translate-y-0.5"
+                  className="flex flex-col overflow-hidden border transition hover:shadow-md hover:-translate-y-0.5"
                   style={{ borderColor: sageSoft, backgroundColor: "white" }}>
-                  <div className="text-2xl mb-2" aria-hidden>{s.icon}</div>
-                  <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.2em] mb-1">{s.n}</div>
-                  <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 15, lineHeight: 1.3 }} className="font-light">{s.title}</h3>
-                  <p className="text-[11px] leading-relaxed text-foreground/60 mt-1.5 line-clamp-2">{s.desc}</p>
+                  <img src={s.img} alt={s.title} loading="lazy" decoding="async" className="w-full h-28 object-cover" />
+                  <div className="p-4">
+                    <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.2em] mb-1">{s.n}</div>
+                    <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 15, lineHeight: 1.3 }} className="font-light">{s.title}</h3>
+                    <p className="text-[11px] leading-relaxed text-foreground/60 mt-1.5 line-clamp-2">{s.desc}</p>
+                  </div>
                 </Reveal>
               ))}
             </div>

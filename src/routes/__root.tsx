@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "/heroshot.png",
         as: "image",
         type: "image/png",
-        fetchpriority: "high",
+        fetchPriority: "high",
       },
     ],
   }),
