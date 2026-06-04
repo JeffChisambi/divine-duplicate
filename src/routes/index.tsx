@@ -156,6 +156,8 @@ function Reveal({
 function Index() {
   const sage = "oklch(0.75 0.025 180)";
   const sageSoft = "oklch(0.94 0.015 180)";
+  const rose = "oklch(0.56 0.11 5)";
+  const roseSoft = "oklch(0.93 0.04 5)";
   const blue = "oklch(0.5 0.14 250)";
 
   const [galleryIdx, setGalleryIdx] = useState(0);
@@ -318,7 +320,7 @@ function Index() {
       </header>
 
       {/* ── Hero ── */}
-      <section id="home" className="relative overflow-hidden" style={{ backgroundColor: sage }}>
+      <section id="home" className="relative overflow-hidden" style={{ backgroundColor: rose }}>
         <nav className="relative z-20 flex items-center justify-between px-6 md:px-10 py-7 text-white">
           <a href="#home" style={{ fontFamily: "var(--font-serif)" }} className="text-xl tracking-wide">Olivia's Nails</a>
           <ul className="hidden md:flex gap-10 text-[11px] font-medium tracking-[0.2em]">
@@ -420,7 +422,7 @@ function Index() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="px-6 md:px-10 py-20" style={{ backgroundColor: sageSoft }}>
+      <section id="about" className="px-6 md:px-10 py-20" style={{ backgroundColor: roseSoft }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <Reveal variant="left" duration={900}>
             <img
@@ -563,7 +565,7 @@ function Index() {
       </section>
 
       {/* ── Booking ── */}
-      <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: sage }}>
+      <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: rose }}>
         <div className="max-w-3xl mx-auto text-center text-white">
           <Reveal variant="up">
             <p className="text-[10px] tracking-[0.2em] mb-4 opacity-90">✦ RESERVATIONS</p>
