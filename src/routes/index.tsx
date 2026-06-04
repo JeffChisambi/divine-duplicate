@@ -473,7 +473,7 @@ function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <Reveal variant="left" duration={900}>
             <img
-              src={productsImg}
+              src="/gallery/nail21.jpg"
               alt="Inside Olivia's home nail studio"
               width={1536} height={576} loading="lazy"
               className="w-full h-auto rounded-sm object-cover aspect-[4/3]"
