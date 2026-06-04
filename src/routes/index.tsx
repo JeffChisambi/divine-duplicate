@@ -287,7 +287,7 @@ function Index() {
             <div className="sidebar-accent-line" style={{ backgroundColor: sage }} />
             <div className="flex items-center justify-between px-7 pt-8 pb-6">
               <span style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.3em] uppercase">✦ Menu</span>
-              <button type="button" onClick={closeMenu} className="sidebar-close-btn bg-[#90314e] text-white hover:bg-[#7a2942] focus:outline-none focus-visible:outline-none" aria-label="Close menu" style={{ borderColor: "#90314e" }}>
+              <button type="button" onClick={closeMenu} className="sidebar-close-btn text-white hover:bg-[#7a2942] focus:outline-none focus-visible:outline-none bg-[#90314e]" aria-label="Close menu" style={{ borderColor: "#90314e" }}>
                 <X strokeWidth={1.25} className="w-4 h-4" />
               </button>
             </div>
