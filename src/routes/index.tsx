@@ -893,7 +893,7 @@ function Index() {
         .mobile-sidebar.is-open { transform:translateX(0); }
         .sidebar-accent-line { height:3px; flex-shrink:0; transform-origin:left; animation:accent-grow 0.7s 0.3s cubic-bezier(.16,1,.3,1) both; }
         @keyframes accent-grow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
-        .sidebar-close-btn { width:36px; height:36px; border-radius:50%; border:1px solid; display:inline-flex; align-items:center; justify-content:center; background:transparent; cursor:pointer; transition:background 0.2s ease,color 0.2s ease,transform 0.3s ease; }
+        .sidebar-close-btn { width:36px; height:36px; border-radius:50%; border:1px solid; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s ease,color 0.2s ease,transform 0.3s ease; }
         .sidebar-close-btn:hover { background:oklch(0.5 0.14 250); color:white; border-color:oklch(0.5 0.14 250); transform:rotate(90deg); }
         .sidebar-brand { opacity:0; transform:translateY(14px); transition:opacity 0.55s 0.18s ease,transform 0.55s 0.18s cubic-bezier(.16,1,.3,1); }
         .sidebar-brand.is-open { opacity:1; transform:translateY(0); }
