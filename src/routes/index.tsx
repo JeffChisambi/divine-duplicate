@@ -416,7 +416,7 @@ function Index() {
 
           <div className="relative md:absolute md:right-10 md:bottom-10 w-full md:w-[300px] z-20 mt-10 md:mt-0 hero-card-animate">
             <div className="bg-white rounded-sm overflow-hidden shadow-sm">
-              <img src="/gallery/nail6.webp" alt="Signature Gel-X nail set" width={768} height={512} loading="lazy" className="w-full h-44 object-cover" />
+              <img src="/heroshot.png" alt="Signature Gel-X nail set" width={768} height={512} loading="lazy" className="w-full h-44 object-cover" />
             </div>
             <div className="mt-3 text-white">
               <div className="flex justify-between items-baseline text-sm">
