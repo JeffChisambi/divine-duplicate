@@ -154,10 +154,8 @@ function Reveal({
 ───────────────────────────────────────── */
 
 function Index() {
-  const sage = "oklch(0.75 0.025 180)";
-  const sageSoft = "oklch(0.94 0.015 180)";
-  const rose = "oklch(0.56 0.11 5)";
-  const roseSoft = "oklch(0.93 0.04 5)";
+  const sage = "oklch(0.56 0.11 5)";
+  const sageSoft = "oklch(0.93 0.04 5)";
   const blue = "oklch(0.5 0.14 250)";
 
   const [galleryIdx, setGalleryIdx] = useState(0);
@@ -320,7 +318,7 @@ function Index() {
       </header>
 
       {/* ── Hero ── */}
-      <section id="home" className="relative overflow-hidden" style={{ backgroundColor: rose }}>
+      <section id="home" className="relative overflow-hidden" style={{ backgroundColor: sage }}>
         <nav className="relative z-20 flex items-center justify-between px-6 md:px-10 py-7 text-white">
           <a href="#home" style={{ fontFamily: "var(--font-serif)" }} className="text-xl tracking-wide">Olivia's Nails</a>
           <ul className="hidden md:flex gap-10 text-[11px] font-medium tracking-[0.2em]">
@@ -422,7 +420,7 @@ function Index() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="px-6 md:px-10 py-20" style={{ backgroundColor: roseSoft }}>
+      <section id="about" className="px-6 md:px-10 py-20" style={{ backgroundColor: sageSoft }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <Reveal variant="left" duration={900}>
             <img
@@ -565,7 +563,7 @@ function Index() {
       </section>
 
       {/* ── Booking ── */}
-      <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: rose }}>
+      <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: sage }}>
         <div className="max-w-3xl mx-auto text-center text-white">
           <Reveal variant="up">
             <p className="text-[10px] tracking-[0.2em] mb-4 opacity-90">✦ RESERVATIONS</p>
@@ -790,7 +788,7 @@ function Index() {
         .sidebar-brand.is-open { opacity:1; transform:translateY(0); }
         .sidebar-divider { transform-origin:left; transform:scaleX(0); transition:transform 0.6s 0.28s cubic-bezier(.16,1,.3,1); }
         .mobile-sidebar.is-open .sidebar-divider { transform:scaleX(1); }
-        .sidebar-nav-link { display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid oklch(0.94 0.015 180); text-decoration:none; opacity:0; transform:translateX(24px); transition:opacity 0.45s ease,transform 0.45s cubic-bezier(.16,1,.3,1),color 0.2s ease; }
+        .sidebar-nav-link { display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid ${sageSoft}; text-decoration:none; opacity:0; transform:translateX(24px); transition:opacity 0.45s ease,transform 0.45s cubic-bezier(.16,1,.3,1),color 0.2s ease; }
         .sidebar-nav-link.is-open { opacity:1; transform:translateX(0); animation:nav-slide-in 0.45s cubic-bezier(.16,1,.3,1) both; }
         @keyframes nav-slide-in { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
         .sidebar-nav-link:hover .sidebar-nav-text { letter-spacing:0.08em; }

@@ -65,7 +65,7 @@
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.25 0.02 240);
-  --sage: oklch(0.75 0.025 180);
+  --sage: oklch(0.56 0.11 5);
   --brand-blue: oklch(0.55 0.13 250);
   --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -149,4 +149,24 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.56 0.11 5 / 0.55);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.56 0.11 5 / 0.85);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.56 0.11 5 / 0.55) transparent;
 }
