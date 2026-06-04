@@ -175,9 +175,24 @@ function Index() {
     setTimeout(() => setMenuVisible(false), 500);
   };
 
+  const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
-    return () => { document.documentElement.style.scrollBehavior = ""; };
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 72);
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = total > 0 ? Math.min(y / total, 1) : 0;
+      headerRef.current?.style.setProperty("--scroll-progress", String(progress));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.documentElement.style.scrollBehavior = "";
+    };
   }, []);
 
   useEffect(() => {
@@ -268,6 +283,40 @@ function Index() {
           </aside>
         </>
       )}
+
+      {/* ── Sticky Header ── */}
+      <header ref={headerRef} className={`sticky-header${scrolled ? " is-visible" : ""}`} style={{ borderBottomColor: sageSoft }}>
+        <div className="sticky-header-inner">
+          <a href="#home" style={{ fontFamily: "var(--font-serif)", color: blue }} className="text-xl tracking-wide transition-opacity hover:opacity-70">
+            Olivia's Nails
+          </a>
+
+          <ul className="hidden md:flex gap-9 text-[11px] font-medium tracking-[0.2em]" style={{ color: blue }}>
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="sticky-nav-link" style={{ color: blue }}>{l.label.toUpperCase()}</a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-4">
+            <Search className="hidden sm:block w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer" strokeWidth={1.5} style={{ color: blue }} />
+            <a
+              href="#book"
+              className="hidden sm:inline-flex items-center rounded-full px-4 py-1.5 text-[11px] tracking-[0.18em] transition-all hover:opacity-80"
+              style={{ border: `1px solid ${blue}`, color: blue }}
+            >
+              BOOK NOW
+            </a>
+            <button type="button" className="md:hidden sticky-ham-btn" onClick={openMenu} aria-label="Open navigation menu" aria-expanded={menuOpen}>
+              <span className="sticky-ham-bar" style={{ backgroundColor: blue }} />
+              <span className="sticky-ham-bar sticky-ham-bar--mid" style={{ backgroundColor: blue }} />
+              <span className="sticky-ham-bar sticky-ham-bar--short" style={{ backgroundColor: blue }} />
+            </button>
+          </div>
+        </div>
+        <div className="sticky-header-progress" style={{ backgroundColor: sage }} />
+      </header>
 
       {/* ── Hero ── */}
       <section id="home" className="relative overflow-hidden" style={{ backgroundColor: sage }}>
@@ -655,6 +704,71 @@ function Index() {
         .hero-image-animate   { animation: hero-image-in   1.1s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
         .hero-tagline-animate { animation: hero-tagline-in 0.9s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
         .hero-card-animate    { animation: hero-card-in    0.9s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
+
+        /* ── Sticky header ── */
+        .sticky-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 80;
+          background: rgba(255,255,255,0.88);
+          backdrop-filter: blur(18px) saturate(1.6);
+          -webkit-backdrop-filter: blur(18px) saturate(1.6);
+          border-bottom: 1px solid;
+          transform: translateY(-110%);
+          opacity: 0;
+          transition: transform 0.52s cubic-bezier(0.16,1,0.3,1), opacity 0.38s ease, box-shadow 0.35s ease;
+          will-change: transform, opacity;
+          box-shadow: 0 0 0 rgba(0,0,0,0);
+        }
+        .sticky-header.is-visible {
+          transform: translateY(0);
+          opacity: 1;
+          box-shadow: 0 2px 28px rgba(0,0,0,0.06), 0 1px 6px rgba(0,0,0,0.04);
+        }
+        .sticky-header-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 2.5rem;
+          height: 62px;
+        }
+        @media (max-width: 767px) {
+          .sticky-header-inner { padding: 0 1.25rem; }
+        }
+        .sticky-nav-link {
+          position: relative;
+          padding-bottom: 2px;
+          opacity: 0.7;
+          transition: opacity 0.2s ease;
+          text-decoration: none;
+        }
+        .sticky-nav-link::after {
+          content: "";
+          position: absolute;
+          left: 0; bottom: -1px; right: 0;
+          height: 1px;
+          background: currentColor;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .sticky-nav-link:hover { opacity: 1; }
+        .sticky-nav-link:hover::after { transform: scaleX(1); }
+        .sticky-header-progress {
+          height: 2px;
+          transform-origin: left;
+          transform: scaleX(var(--scroll-progress, 0));
+          transition: transform 0.05s linear;
+          opacity: 0.7;
+        }
+
+        /* ── Sticky hamburger ── */
+        .sticky-ham-btn { display:flex; flex-direction:column; gap:5px; padding:4px; background:transparent; border:none; cursor:pointer; }
+        .sticky-ham-bar { display:block; width:22px; height:1.5px; border-radius:2px; transition:width 0.3s ease; }
+        .sticky-ham-bar--mid { }
+        .sticky-ham-bar--short { width:14px; }
 
         /* ── Hamburger ── */
         .hamburger-btn { display:flex; flex-direction:column; gap:5px; padding:4px; background:transparent; border:none; cursor:pointer; }
