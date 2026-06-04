@@ -156,7 +156,7 @@ function Reveal({
 function Index() {
   const sage = "oklch(0.56 0.11 5)";
   const sageSoft = "oklch(0.93 0.04 5)";
-  const blue = "oklch(0.5 0.14 250)";
+  const blue = "oklch(0.46 0.13 5)";
 
   const [galleryIdx, setGalleryIdx] = useState(0);
   const nextG = () => setGalleryIdx((i) => (i + 1) % gallery.length);
