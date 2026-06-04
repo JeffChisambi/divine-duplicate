@@ -389,7 +389,7 @@ function Index() {
 
         <div className="relative px-6 md:px-10 pb-16">
           <h1
-            className="absolute top-16 left-0 right-0 text-white pointer-events-none leading-[0.9] tracking-tight z-10 hero-title-animate"
+            className="absolute top-1/2 -translate-y-1/2 left-0 right-0 text-white pointer-events-none leading-[0.9] tracking-tight z-10 hero-title-animate"
             style={{ fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: "clamp(70px, 13vw, 210px)", paddingLeft: "8vw" }}
           >
             <span className="block">Your Nails,</span>
