@@ -421,7 +421,7 @@ function Index() {
             <div className="grid grid-cols-2 gap-4 mb-4 items-start">
               {services.slice(0, 2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={i * 100} as="article"
-                  className="rounded-2xl p-6 flex flex-col gap-3 transition hover:shadow-lg"
+                  className="p-6 flex flex-col gap-3 transition hover:shadow-lg"
                   style={{
                     backgroundColor: sageSoft,
                     marginTop: i === 1 ? 28 : 0,
@@ -439,7 +439,7 @@ function Index() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {services.slice(2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={200 + i * 70} as="article"
-                  className="rounded-xl p-4 border transition hover:shadow-md hover:-translate-y-0.5"
+                  className="p-4 border transition hover:shadow-md hover:-translate-y-0.5"
                   style={{ borderColor: sageSoft, backgroundColor: "white" }}>
                   <div className="text-2xl mb-2" aria-hidden>{s.icon}</div>
                   <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.2em] mb-1">{s.n}</div>
