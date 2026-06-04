@@ -643,15 +643,38 @@ function Index() {
                 </Field>
               </div>
             </div>
-            <button type="submit" style={{ backgroundColor: blue }} className="mt-8 w-full inline-flex items-center justify-center gap-3 px-6 py-3 text-white text-xs tracking-[0.18em] hover:opacity-90 transition">
+            <button type="submit" style={{ backgroundColor: blue }} className="mt-8 w-full inline-flex items-center justify-center gap-3 rounded-full px-6 py-3 text-white text-xs tracking-[0.18em] hover:opacity-90 transition">
               SEND BOOKING REQUEST <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
         </Reveal>
 
         <style>{`
-          .form-input { width:100%; border:1px solid ${sageSoft}; border-radius:0; padding:0.65rem 0.85rem; font-size:0.875rem; font-family:var(--font-sans); color:var(--color-foreground); background-color:white; outline:none; transition:border-color .15s; }
-          .form-input:focus { border-color:${sage}; }
+          .form-input {
+            width:100%; border:1px solid ${sageSoft}; border-radius:0;
+            padding:0.65rem 0.85rem; font-size:0.875rem; font-family:var(--font-sans);
+            color:var(--color-foreground); background-color:white;
+            outline:none; transition:border-color .2s,background-color .2s;
+          }
+          .form-input:focus { border-color:${sage}; background-color:oklch(0.93 0.04 5 / 0.18); }
+
+          /* Brand-styled selects — hide native arrow, inject custom SVG */
+          select.form-input {
+            appearance:none; -webkit-appearance:none;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='oklch(0.56 0.11 5)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:right 0.85rem center;
+            padding-right:2.5rem; cursor:pointer;
+          }
+          select.form-input:focus { border-color:${sage}; background-color:oklch(0.93 0.04 5 / 0.18); }
+          select.form-input option { background:white; color:var(--color-foreground); }
+
+          /* Brand-styled date input */
+          input[type="date"].form-input { cursor:pointer; color-scheme:light; }
+          input[type="date"].form-input::-webkit-calendar-picker-indicator {
+            opacity:0.6; cursor:pointer;
+            filter:invert(38%) sepia(40%) saturate(600%) hue-rotate(310deg) brightness(80%);
+          }
+          input[type="date"].form-input:focus { border-color:${sage}; background-color:oklch(0.93 0.04 5 / 0.18); }
         `}</style>
       </section>
 
