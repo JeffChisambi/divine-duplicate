@@ -25,6 +25,13 @@ const gallery = [
   { src: "/gallery/nail16.webp", title: "Burgundy French", tag: "Gel · Almond", n: "16" },
   { src: "/gallery/nail17.webp", title: "Baby Pink Marble", tag: "Rubber Base · Almond", n: "17" },
   { src: "/gallery/nail18.webp", title: "Pink French Square", tag: "Acrylic · Square", n: "18" },
+  { src: "/gallery/nail19.jpg", title: "Nude Gold Accent", tag: "Gel · Square", n: "19" },
+  { src: "/gallery/nail20.jpg", title: "Cherry Red Art", tag: "Acrylic · Almond", n: "20" },
+  { src: "/gallery/nail21.jpg", title: "Nude Almond Set", tag: "Rubber Base · Almond", n: "21" },
+  { src: "/gallery/nail22.jpg", title: "Noir French Short", tag: "Gel-X · Square", n: "22" },
+  { src: "/gallery/nail23.jpg", title: "Red Chrome Almond", tag: "Gel · Almond", n: "23" },
+  { src: "/gallery/nail24.jpg", title: "Classic Pink French", tag: "Acrylic · Square", n: "24" },
+  { src: "/gallery/nail25.jpg", title: "Deep Red Square", tag: "Gel · Square", n: "25" },
 ];
 
 export const Route = createFileRoute("/")({
