@@ -69,6 +69,10 @@ function Index() {
   const sageSoft = "oklch(0.94 0.015 180)";
   const blue = "oklch(0.5 0.14 250)";
 
+  const [galleryIdx, setGalleryIdx] = useState(0);
+  const nextG = () => setGalleryIdx((i) => (i + 1) % gallery.length);
+  const prevG = () => setGalleryIdx((i) => (i - 1 + gallery.length) % gallery.length);
+
   const [form, setForm] = useState({
     firstName: "",
     phone: "",
