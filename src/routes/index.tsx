@@ -227,7 +227,7 @@ function Index() {
   };
 
   return (
-    <div style={{ fontFamily: "var(--font-sans)" }} className="min-h-screen bg-white text-foreground">
+    <div style={{ fontFamily: "var(--font-sans)" }} className="min-h-screen bg-white text-foreground overflow-x-hidden">
 
       {/* ── Mobile Right Sidebar ── */}
       {menuVisible && (
