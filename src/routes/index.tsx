@@ -300,7 +300,6 @@ function Index() {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Search className="hidden sm:block w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer" strokeWidth={1.5} style={{ color: blue }} />
             <a
               href="#book"
               className="hidden sm:inline-flex items-center rounded-full px-4 py-1.5 text-[11px] tracking-[0.18em] transition-all hover:opacity-80"
@@ -331,7 +330,6 @@ function Index() {
             <li><a href="#contact">CONTACT</a></li>
           </ul>
           <div className="flex gap-5 items-center">
-            <Search className="w-5 h-5 hidden sm:block" strokeWidth={1.5} />
             <a href="#book" className="hidden sm:inline-flex items-center rounded-full border border-white/80 px-4 py-1.5 text-[11px] tracking-[0.18em] hover:bg-white hover:text-foreground transition">
               BOOK NOW
             </a>
@@ -809,7 +807,7 @@ function Index() {
         .sidebar-bottom-decor { position:absolute; bottom:-14px; right:18px; opacity:0.08; pointer-events:none; line-height:1; }
 
         @media (min-width:768px) {
-          .mobile-sidebar, .mobile-backdrop, .hamburger-btn { display:none !important; }
+          .mobile-sidebar, .mobile-backdrop, .hamburger-btn, .sticky-ham-btn { display:none !important; }
         }
 
         @media (prefers-reduced-motion:reduce) {
