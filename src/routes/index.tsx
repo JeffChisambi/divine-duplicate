@@ -385,36 +385,69 @@ function Index() {
       </section>
 
       {/* ── Services ── */}
-      <section id="services" className="px-6 md:px-10 py-20 bg-white">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 items-start">
-          <div className="md:sticky md:top-10">
+      <section id="services" className="px-6 md:px-10 py-20 bg-white overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-14 items-start">
+
+          {/* Left: heading + CTA */}
+          <div className="lg:sticky lg:top-24">
             <Reveal variant="left" delay={0}>
-              <p className="text-[10px] tracking-[0.2em] mb-4" style={{ color: sage }}>✦ SERVICES</p>
+              <p className="text-[10px] tracking-[0.2em] mb-5" style={{ color: sage }}>✦ SERVICES</p>
             </Reveal>
-            <Reveal variant="left" delay={80}>
-              <h2 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 44, lineHeight: 1.05 }} className="font-light tracking-wide">
-                BEAUTIFUL<br />NAILS START<br />HERE
+            <Reveal variant="left" delay={70}>
+              <h2 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 48, lineHeight: 1.05 }} className="font-light">
+                Services<br />We&nbsp;
+                <span className="italic" style={{ color: sage }}>Provide.</span>
               </h2>
             </Reveal>
-            <Reveal variant="left" delay={180}>
-              <p className="mt-6 text-sm leading-relaxed text-foreground/80 max-w-xs">
-                Discover a curated menu of nail services designed to strengthen, shape, and elevate. From everyday classics to statement extensions, each set is crafted with care.
+            <Reveal variant="left" delay={160}>
+              <p className="mt-6 text-sm leading-relaxed text-foreground/70 max-w-[280px]">
+                Our experienced nail technicians will customise each set to suit your unique nail type and aesthetic goals.
               </p>
+            </Reveal>
+            <Reveal variant="left" delay={240}>
+              <a
+                href="#book"
+                className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full text-[11px] tracking-[0.18em] text-white transition hover:opacity-85"
+                style={{ backgroundColor: sage }}
+              >
+                Book a Service <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </a>
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((s, i) => (
-              <Reveal key={s.n} variant="up" delay={i * 80} as="article"
-                className="p-6 bg-white border transition hover:shadow-md"
-                style={{ borderColor: sageSoft }}>
-                <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-sm tracking-widest">{s.n}</div>
-                <div className="text-3xl mt-3" aria-hidden>{s.icon}</div>
-                <h3 style={{ fontFamily: "var(--font-serif)", color: blue }} className="text-xl mt-3 font-light">{s.title}</h3>
-                <div className="h-px my-3" style={{ backgroundColor: sageSoft }} />
-                <p className="text-xs leading-relaxed text-foreground/75">{s.desc}</p>
-              </Reveal>
-            ))}
+          {/* Right: staggered card grid */}
+          <div>
+            {/* Top 2 — featured cards, second one offset down for editorial stagger */}
+            <div className="grid grid-cols-2 gap-4 mb-4 items-start">
+              {services.slice(0, 2).map((s, i) => (
+                <Reveal key={s.n} variant="up" delay={i * 100} as="article"
+                  className="rounded-2xl p-6 flex flex-col gap-3 transition hover:shadow-lg"
+                  style={{
+                    backgroundColor: sageSoft,
+                    marginTop: i === 1 ? 28 : 0,
+                  }}>
+                  <div className="text-3xl" aria-hidden>{s.icon}</div>
+                  <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[11px] tracking-[0.25em]">{s.n}</div>
+                  <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 22, lineHeight: 1.2 }} className="font-light">{s.title}</h3>
+                  <div className="h-px" style={{ backgroundColor: `oklch(0.56 0.11 5 / 0.18)` }} />
+                  <p className="text-xs leading-relaxed text-foreground/70">{s.desc}</p>
+                </Reveal>
+              ))}
+            </div>
+
+            {/* Bottom 4 — compact cards in a row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {services.slice(2).map((s, i) => (
+                <Reveal key={s.n} variant="up" delay={200 + i * 70} as="article"
+                  className="rounded-xl p-4 border transition hover:shadow-md hover:-translate-y-0.5"
+                  style={{ borderColor: sageSoft, backgroundColor: "white" }}>
+                  <div className="text-2xl mb-2" aria-hidden>{s.icon}</div>
+                  <div style={{ fontFamily: "var(--font-serif)", color: sage }} className="text-[10px] tracking-[0.2em] mb-1">{s.n}</div>
+                  <h3 style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 15, lineHeight: 1.3 }} className="font-light">{s.title}</h3>
+                  <p className="text-[11px] leading-relaxed text-foreground/60 mt-1.5 line-clamp-2">{s.desc}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
