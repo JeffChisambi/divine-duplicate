@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Search, CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, Search, CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/")({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap",
       },
     ],
   }),
@@ -64,6 +64,15 @@ const aboutPoints = [
   "Trusted by hundreds of clients across Johannesburg",
 ];
 
+const navLinks = [
+  { href: "#home", label: "Home" },
+  { href: "#services", label: "Services" },
+  { href: "#about", label: "About" },
+  { href: "#gallery", label: "Gallery" },
+  { href: "#book", label: "Book" },
+  { href: "#contact", label: "Contact" },
+];
+
 function Index() {
   const sage = "oklch(0.75 0.025 180)";
   const sageSoft = "oklch(0.94 0.015 180)";
@@ -72,6 +81,36 @@ function Index() {
   const [galleryIdx, setGalleryIdx] = useState(0);
   const nextG = () => setGalleryIdx((i) => (i + 1) % gallery.length);
   const prevG = () => setGalleryIdx((i) => (i - 1 + gallery.length) % gallery.length);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const openMenu = () => {
+    setMenuVisible(true);
+    requestAnimationFrame(() => setMenuOpen(true));
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setTimeout(() => setMenuVisible(false), 500);
+  };
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  const handleNavClick = (href: string) => {
+    closeMenu();
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 400);
+  };
 
   const [form, setForm] = useState({
     firstName: "",
@@ -95,6 +134,121 @@ function Index() {
 
   return (
     <div style={{ fontFamily: "var(--font-sans)" }} className="min-h-screen bg-white text-foreground">
+
+      {/* Mobile Right Sidebar */}
+      {menuVisible && (
+        <>
+          {/* Backdrop */}
+          <div
+            className={`mobile-backdrop${menuOpen ? " is-open" : ""}`}
+            onClick={closeMenu}
+            aria-hidden="true"
+          />
+
+          {/* Sidebar panel */}
+          <aside className={`mobile-sidebar${menuOpen ? " is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Navigation menu">
+
+            {/* Decorative top accent line */}
+            <div className="sidebar-accent-line" style={{ backgroundColor: sage }} />
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-7 pt-8 pb-6">
+              <span
+                style={{ fontFamily: "var(--font-serif)", color: sage }}
+                className="text-[10px] tracking-[0.3em] uppercase"
+              >
+                ✦ Menu
+              </span>
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="sidebar-close-btn"
+                aria-label="Close menu"
+                style={{ borderColor: sageSoft, color: blue }}
+              >
+                <X strokeWidth={1.25} className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Brand name */}
+            <div className="px-7 pb-8">
+              <p
+                style={{ fontFamily: "var(--font-serif)", color: blue, fontSize: 32, lineHeight: 1.1 }}
+                className={`font-light tracking-wide sidebar-brand${menuOpen ? " is-open" : ""}`}
+              >
+                Olivia's<br />
+                <span className="italic" style={{ color: sage }}>Nails.</span>
+              </p>
+              <div className="mt-3 h-px sidebar-divider" style={{ backgroundColor: sageSoft }} />
+            </div>
+
+            {/* Nav links */}
+            <nav className="px-7 flex flex-col gap-1">
+              {navLinks.map((link, i) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                  className={`sidebar-nav-link${menuOpen ? " is-open" : ""}`}
+                  style={{
+                    animationDelay: menuOpen ? `${120 + i * 65}ms` : "0ms",
+                    fontFamily: "var(--font-serif)",
+                    color: blue,
+                  }}
+                >
+                  <span className="sidebar-nav-num" style={{ color: sage }}>
+                    0{i + 1}
+                  </span>
+                  <span className="sidebar-nav-text">{link.label}</span>
+                  <span className="sidebar-nav-arrow" style={{ color: sage }}>→</span>
+                </a>
+              ))}
+            </nav>
+
+            {/* Decorative flourish */}
+            <div className={`px-7 mt-10 sidebar-flourish${menuOpen ? " is-open" : ""}`}>
+              <div className="h-px mb-6" style={{ backgroundColor: sageSoft }} />
+              <p
+                style={{ fontFamily: "var(--font-serif)", color: sage, fontSize: 13 }}
+                className="italic leading-relaxed opacity-80"
+              >
+                "Timeless nails, crafted<br />with intention."
+              </p>
+            </div>
+
+            {/* CTA */}
+            <div className={`px-7 mt-8 sidebar-cta${menuOpen ? " is-open" : ""}`}>
+              <a
+                href="#book"
+                onClick={(e) => { e.preventDefault(); handleNavClick("#book"); }}
+                className="sidebar-book-btn"
+                style={{ backgroundColor: blue }}
+              >
+                Book Appointment <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {/* Location */}
+            <div className={`px-7 mt-6 sidebar-location${menuOpen ? " is-open" : ""}`}>
+              <p className="text-[10px] tracking-[0.2em] opacity-60 uppercase" style={{ color: blue }}>
+                ✦ Kelvin, Woodmead · Sandton
+              </p>
+              <p className="text-[11px] mt-1 opacity-50" style={{ color: blue }}>
+                +27 78 038 9060
+              </p>
+            </div>
+
+            {/* Bottom decorative element */}
+            <div
+              className="sidebar-bottom-decor"
+              style={{ fontFamily: "var(--font-serif)", color: sageSoft }}
+            >
+              <span className="text-[80px] font-light leading-none select-none">✦</span>
+            </div>
+          </aside>
+        </>
+      )}
+
       {/* Hero */}
       <section id="home" className="relative overflow-hidden" style={{ backgroundColor: sage }}>
         <nav className="relative z-20 flex items-center justify-between px-6 md:px-10 py-7 text-white">
@@ -110,13 +264,25 @@ function Index() {
             <li><a href="#contact">CONTACT</a></li>
           </ul>
           <div className="flex gap-5 items-center">
-            <Search className="w-5 h-5" strokeWidth={1.5} />
+            <Search className="w-5 h-5 hidden sm:block" strokeWidth={1.5} />
             <a
               href="#book"
               className="hidden sm:inline-flex items-center rounded-full border border-white/80 px-4 py-1.5 text-[11px] tracking-[0.18em] hover:bg-white hover:text-foreground transition"
             >
               BOOK NOW
             </a>
+            {/* Hamburger — mobile only */}
+            <button
+              type="button"
+              className="md:hidden hamburger-btn"
+              onClick={openMenu}
+              aria-label="Open navigation menu"
+              aria-expanded={menuOpen}
+            >
+              <span className="ham-bar" />
+              <span className="ham-bar ham-bar--mid" />
+              <span className="ham-bar ham-bar--short" />
+            </button>
           </div>
         </nav>
 
@@ -482,9 +648,6 @@ function Index() {
         `}</style>
       </section>
 
-
-
-
       {/* Booking */}
       <section id="book" className="px-6 md:px-10 py-20" style={{ backgroundColor: sage }}>
         <div className="max-w-3xl mx-auto text-center text-white">
@@ -661,6 +824,233 @@ function Index() {
           </p>
         </div>
       </section>
+
+      {/* Global sidebar styles */}
+      <style>{`
+        /* ─── Hamburger ─── */
+        .hamburger-btn {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          padding: 4px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }
+        .ham-bar {
+          display: block;
+          width: 22px;
+          height: 1.5px;
+          background: white;
+          border-radius: 2px;
+          transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s ease, width 0.3s ease;
+          transform-origin: center;
+        }
+        .ham-bar--short { width: 14px; }
+
+        /* ─── Backdrop ─── */
+        .mobile-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 90;
+          background: rgba(30, 40, 55, 0.45);
+          backdrop-filter: blur(3px);
+          opacity: 0;
+          transition: opacity 0.45s cubic-bezier(.4,0,.2,1);
+        }
+        .mobile-backdrop.is-open { opacity: 1; }
+
+        /* ─── Sidebar panel ─── */
+        .mobile-sidebar {
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 100;
+          width: min(320px, 85vw);
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          transform: translateX(100%);
+          transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+          box-shadow: -12px 0 60px rgba(0,0,0,0.12), -2px 0 12px rgba(0,0,0,0.06);
+        }
+        .mobile-sidebar.is-open {
+          transform: translateX(0);
+        }
+
+        /* Accent line at the top of panel */
+        .sidebar-accent-line {
+          height: 3px;
+          flex-shrink: 0;
+          transform-origin: left;
+          animation: accent-grow 0.7s 0.3s cubic-bezier(.16,1,.3,1) both;
+        }
+        @keyframes accent-grow {
+          from { transform: scaleX(0); }
+          to   { transform: scaleX(1); }
+        }
+
+        /* Close button */
+        .sidebar-close-btn {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          cursor: pointer;
+          transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+        }
+        .sidebar-close-btn:hover {
+          background: oklch(0.5 0.14 250);
+          color: white;
+          border-color: oklch(0.5 0.14 250);
+          transform: rotate(90deg);
+        }
+
+        /* Brand name */
+        .sidebar-brand {
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 0.55s 0.18s ease, transform 0.55s 0.18s cubic-bezier(.16,1,.3,1);
+        }
+        .sidebar-brand.is-open {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Divider in brand section */
+        .sidebar-divider {
+          transform-origin: left;
+          transform: scaleX(0);
+          transition: transform 0.6s 0.28s cubic-bezier(.16,1,.3,1);
+        }
+        .mobile-sidebar.is-open .sidebar-divider {
+          transform: scaleX(1);
+        }
+
+        /* Nav links */
+        .sidebar-nav-link {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 13px 0;
+          border-bottom: 1px solid oklch(0.94 0.015 180);
+          text-decoration: none;
+          opacity: 0;
+          transform: translateX(24px);
+          transition: opacity 0.45s ease, transform 0.45s cubic-bezier(.16,1,.3,1),
+                      color 0.2s ease, background 0.2s ease;
+        }
+        .sidebar-nav-link.is-open {
+          opacity: 1;
+          transform: translateX(0);
+          animation: nav-slide-in 0.45s cubic-bezier(.16,1,.3,1) both;
+        }
+        @keyframes nav-slide-in {
+          from { opacity: 0; transform: translateX(28px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        .sidebar-nav-link:hover .sidebar-nav-text {
+          letter-spacing: 0.08em;
+        }
+        .sidebar-nav-link:hover .sidebar-nav-arrow {
+          transform: translateX(4px);
+        }
+        .sidebar-nav-num {
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          font-family: var(--font-serif);
+          min-width: 22px;
+          opacity: 0.7;
+        }
+        .sidebar-nav-text {
+          font-size: 22px;
+          font-weight: 300;
+          letter-spacing: 0.04em;
+          flex: 1;
+          transition: letter-spacing 0.3s ease;
+        }
+        .sidebar-nav-arrow {
+          font-size: 15px;
+          opacity: 0.5;
+          transition: transform 0.25s ease;
+        }
+
+        /* Flourish quote */
+        .sidebar-flourish {
+          opacity: 0;
+          transition: opacity 0.5s 0.55s ease;
+        }
+        .sidebar-flourish.is-open { opacity: 1; }
+
+        /* CTA button */
+        .sidebar-cta {
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 0.45s 0.62s ease, transform 0.45s 0.62s cubic-bezier(.16,1,.3,1);
+        }
+        .sidebar-cta.is-open { opacity: 1; transform: translateY(0); }
+        .sidebar-book-btn {
+          display: inline-flex;
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          border-radius: 9999px;
+          padding: 0.75rem 1.5rem;
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          color: white;
+          text-decoration: none;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .sidebar-book-btn:hover { opacity: 0.88; transform: scale(1.01); }
+
+        /* Location */
+        .sidebar-location {
+          opacity: 0;
+          transition: opacity 0.45s 0.7s ease;
+        }
+        .sidebar-location.is-open { opacity: 1; }
+
+        /* Bottom decorative ✦ */
+        .sidebar-bottom-decor {
+          position: absolute;
+          bottom: -14px;
+          right: 18px;
+          opacity: 0.08;
+          pointer-events: none;
+          line-height: 1;
+        }
+
+        /* Only show on mobile */
+        @media (min-width: 768px) {
+          .mobile-sidebar,
+          .mobile-backdrop,
+          .hamburger-btn {
+            display: none !important;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .mobile-sidebar,
+          .mobile-backdrop,
+          .sidebar-nav-link,
+          .sidebar-brand,
+          .sidebar-cta,
+          .sidebar-flourish,
+          .sidebar-location,
+          .sidebar-accent-line {
+            transition: none !important;
+            animation: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
