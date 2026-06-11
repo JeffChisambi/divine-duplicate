@@ -13,7 +13,7 @@ const C = {
 }
 
 const NAV = [
-  { to: '/admin', label: 'Dashboard', Icon: LayoutDashboard, exact: true },
+  { to: '/admin/', label: 'Dashboard', Icon: LayoutDashboard, exact: true },
   { to: '/admin/bookings', label: 'Bookings', Icon: CalendarCheck, exact: false },
   { to: '/admin/calendar', label: 'Calendar', Icon: Calendar, exact: false },
   { to: '/admin/settings', label: 'Settings', Icon: Settings, exact: false },

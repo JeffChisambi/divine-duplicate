@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Search, ChevronDown, Trash2, RefreshCw } from 'lucide-react'
 import { AdminShell } from '../../components/admin/AdminShell'
 import { getBookings, updateBookingStatus, deleteBooking } from '../../server/bookings'
-import type { BookingRow, BookingStatus } from '../../lib/db'
+import type { BookingRow, BookingStatus } from '../../lib/db.server'
 
 export const Route = createFileRoute('/admin/bookings')({ component: BookingsPage })
 

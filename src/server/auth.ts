@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import bcrypt from 'bcryptjs'
-import { query, initDb, type AdminRow } from '../lib/db'
+import { query, initDb, type AdminRow } from '../lib/db.server'
 
 const loginAttempts = new Map<string, { count: number; resetAt: number }>()
 

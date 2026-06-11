@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { CalendarDays, CheckCircle2, Clock, XCircle, Sparkles, BookOpen } from 'lucide-react'
 import { AdminShell } from '../../components/admin/AdminShell'
 import { getBookingStats, getBookings } from '../../server/bookings'
-import type { BookingRow } from '../../lib/db'
+import type { BookingRow } from '../../lib/db.server'
 
 export const Route = createFileRoute('/admin/')({
   component: Dashboard,

@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { query, initDb, type BookingRow, type BookingStatus } from '../lib/db'
+import { query, initDb, type BookingRow, type BookingStatus } from '../lib/db.server'
 
 async function requireAuth(token: string): Promise<number> {
   const { rows } = await query<{ admin_id: number; expires_at: string }>(

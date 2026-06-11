@@ -24,7 +24,7 @@ function LoginPage() {
       const res = await loginAdmin({ data: { username: username.trim(), password } })
       if (res.success) {
         localStorage.setItem('admin_token', res.token)
-        navigate({ to: '/admin' })
+        navigate({ to: '/admin/' } as never)
       } else {
         setError(res.error ?? 'Login failed.')
       }
