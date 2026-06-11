@@ -179,6 +179,27 @@ function Index() {
   const nextG = () => setGalleryIdx((i) => (i + 1) % gallery.length);
   const prevG = () => setGalleryIdx((i) => (i - 1 + gallery.length) % gallery.length);
 
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const closeLightbox = () => setLightboxIdx(null);
+  const lightboxNext = () => setLightboxIdx((i) => i === null ? null : (i + 1) % gallery.length);
+  const lightboxPrev = () => setLightboxIdx((i) => i === null ? null : (i - 1 + gallery.length) % gallery.length);
+
+  useEffect(() => {
+    if (lightboxIdx === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") lightboxNext();
+      if (e.key === "ArrowLeft")  lightboxPrev();
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxIdx]);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -605,7 +626,7 @@ function Index() {
                         transform: `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`,
                         opacity, pointerEvents: abs > 1 ? "none" : "auto",
                       }}
-                      onClick={() => !isCenter && setGalleryIdx(i)}
+                      onClick={() => isCenter ? setLightboxIdx(i) : setGalleryIdx(i)}
                     >
                       <div className="cf-frame">
                         <img src={g.src} alt={g.title} loading="lazy" decoding="async" />
@@ -806,6 +827,44 @@ function Index() {
         </div>
       </section>
 
+      {/* ── Lightbox ── */}
+      {lightboxIdx !== null && (() => {
+        const img = gallery[lightboxIdx];
+        return (
+          <div className="lb-backdrop" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label={`Viewing ${img.title}`}>
+            <button type="button" className="lb-close" onClick={closeLightbox} aria-label="Close">
+              <X strokeWidth={1.25} className="w-5 h-5" />
+            </button>
+
+            <button type="button" className="lb-arrow lb-arrow-left" onClick={(e) => { e.stopPropagation(); lightboxPrev(); }} aria-label="Previous image">
+              <ChevronLeft strokeWidth={1.25} className="w-6 h-6" />
+            </button>
+
+            <div className="lb-content" onClick={(e) => e.stopPropagation()}>
+              <div className="lb-frame">
+                <img
+                  key={img.src}
+                  src={img.src}
+                  alt={img.title}
+                  className="lb-img"
+                  decoding="async"
+                />
+              </div>
+              <div className="lb-meta">
+                <span className="lb-num" style={{ fontFamily: "var(--font-serif)", color: sage }}>{img.n}</span>
+                <span className="lb-title" style={{ fontFamily: "var(--font-serif)", color: "white" }}>{img.title}</span>
+                <span className="lb-tag" style={{ color: "rgba(255,255,255,0.55)" }}>{img.tag}</span>
+                <span className="lb-counter" style={{ color: "rgba(255,255,255,0.35)" }}>{lightboxIdx + 1} / {gallery.length}</span>
+              </div>
+            </div>
+
+            <button type="button" className="lb-arrow lb-arrow-right" onClick={(e) => { e.stopPropagation(); lightboxNext(); }} aria-label="Next image">
+              <ChevronRight strokeWidth={1.25} className="w-6 h-6" />
+            </button>
+          </div>
+        );
+      })()}
+
       {/* ── Global styles ── */}
       <style>{`
         /* ── Hero entrance animations ── */
@@ -943,6 +1002,69 @@ function Index() {
           .hero-title-animate, .hero-image-animate, .hero-tagline-animate, .hero-card-animate,
           .mobile-sidebar, .mobile-backdrop, .sidebar-nav-link, .sidebar-brand, .sidebar-cta,
           .sidebar-flourish, .sidebar-location, .sidebar-accent-line { transition:none !important; animation:none !important; }
+        }
+
+        /* ── Lightbox ── */
+        @keyframes lb-backdrop-in  { from { opacity:0; } to { opacity:1; } }
+        @keyframes lb-content-in   { from { opacity:0; transform:scale(0.94) translateY(12px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+        .lb-backdrop {
+          position:fixed; inset:0; z-index:1000;
+          background:rgba(0,0,0,0.93);
+          backdrop-filter:blur(4px);
+          -webkit-backdrop-filter:blur(4px);
+          display:flex; align-items:center; justify-content:center;
+          animation:lb-backdrop-in 0.28s ease both;
+          padding:0 64px;
+        }
+        .lb-close {
+          position:fixed; top:20px; right:24px; z-index:1010;
+          width:44px; height:44px; border-radius:9999px; border:1px solid rgba(255,255,255,0.2);
+          background:rgba(255,255,255,0.08); color:white; cursor:pointer;
+          display:inline-flex; align-items:center; justify-content:center;
+          transition:background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .lb-close:hover { background:rgba(255,255,255,0.16); border-color:rgba(255,255,255,0.45); transform:scale(1.06); }
+        .lb-content {
+          display:flex; flex-direction:column; align-items:center; gap:18px; max-width:min(780px,90vw);
+          animation:lb-content-in 0.36s cubic-bezier(0.16,1,0.3,1) 0.06s both;
+        }
+        .lb-frame {
+          position:relative; background:white; padding:10px 10px 12px;
+          box-shadow:0 40px 90px -20px rgba(0,0,0,0.7), 0 10px 30px -10px rgba(0,0,0,0.4);
+          width:100%;
+        }
+        .lb-img {
+          display:block; width:100%; max-height:72vh; object-fit:contain;
+          filter:saturate(1.04) contrast(1.02);
+        }
+        .lb-meta {
+          display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;
+          padding:0 4px;
+        }
+        .lb-num   { font-size:11px; letter-spacing:0.28em; opacity:0.7; }
+        .lb-title { font-size:22px; font-weight:300; letter-spacing:0.04em; line-height:1; }
+        .lb-tag   { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; }
+        .lb-counter { font-size:11px; letter-spacing:0.18em; }
+        .lb-arrow {
+          position:absolute; top:50%; transform:translateY(-50%); z-index:1010;
+          width:48px; height:48px; border-radius:9999px; border:1px solid rgba(255,255,255,0.2);
+          background:rgba(255,255,255,0.07); color:white; cursor:pointer;
+          display:inline-flex; align-items:center; justify-content:center;
+          transition:background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .lb-arrow:hover { background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.5); }
+        .lb-arrow-left  { left:12px; }
+        .lb-arrow-right { right:12px; }
+        .lb-arrow-left:hover  { transform:translateY(-50%) translateX(-2px); }
+        .lb-arrow-right:hover { transform:translateY(-50%) translateX(2px); }
+        .cf-card.is-center { cursor:zoom-in; }
+        @media (max-width:640px) {
+          .lb-backdrop { padding:0 48px; }
+          .lb-arrow { width:38px; height:38px; }
+          .lb-arrow-left  { left:4px; }
+          .lb-arrow-right { right:4px; }
+          .lb-title { font-size:18px; }
         }
       `}</style>
     </div>
