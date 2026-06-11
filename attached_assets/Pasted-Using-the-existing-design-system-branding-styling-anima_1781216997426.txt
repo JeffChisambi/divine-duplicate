@@ -1,0 +1,154 @@
+Using the existing design system, branding, styling, animations, and overall user experience of the current website, build a complete production-ready booking management dashboard as part of the same application. The dashboard should feel like a natural extension of the website and maintain visual consistency throughout.
+
+### Booking Workflow
+
+The current booking form sends booking requests to WhatsApp. Keep this functionality unchanged, but extend the workflow so that every booking submission:
+
+1. Sends the booking details to WhatsApp.
+2. Saves the booking in the application's database.
+3. Makes the booking immediately available in the admin dashboard.
+
+The booking data to capture includes:
+
+* First Name
+* Phone Number
+* Email (optional)
+* Service
+* Preferred Date
+* Preferred Time
+* Notes
+* Submission Timestamp
+* Booking Status
+
+### Dashboard Requirements
+
+Create a professional, production-grade admin dashboard with the following features:
+
+#### Authentication
+
+* Secure login page for administrators.
+* Password-protected dashboard access.
+* Default administrator account created during setup.
+* Ability for administrators to change their password from within the dashboard.
+* Proper session handling and route protection.
+* Prevent unauthorized access to dashboard routes.
+
+#### Booking Management
+
+* View all bookings in a responsive data table.
+* Search bookings by customer name, phone number, or service.
+* Filter bookings by:
+
+  * Date
+  * Service
+  * Status
+* Sort bookings by newest, oldest, upcoming date, and status.
+* View full booking details.
+* Update booking status:
+
+  * Pending
+  * Confirmed
+  * Completed
+  * Cancelled
+* Delete bookings when necessary.
+* Display booking statistics and summary cards.
+
+#### Dashboard Overview
+
+Include a dashboard home page showing:
+
+* Total Bookings
+* Pending Bookings
+* Confirmed Bookings
+* Completed Bookings
+* Cancelled Bookings
+* Upcoming Appointments
+
+#### Calendar View
+
+Provide a calendar or schedule view that allows the salon owner to quickly see upcoming appointments by date and time.
+
+### Architecture Requirements
+
+Implement the solution using a single-deployment architecture:
+
+* React frontend
+* Express.js backend
+* SQLite database
+* Single application deployment
+* Frontend and backend served from the same domain
+* Production-ready API structure
+* Environment variable configuration
+* Proper error handling
+* Logging and validation
+
+The application should be deployable on a VPS using:
+
+* Node.js
+* PM2
+* Nginx reverse proxy
+
+### Security Requirements
+
+* Password hashing using bcrypt.
+* Protected API endpoints.
+* Input validation and sanitization.
+* Secure authentication flow.
+* Protection against common vulnerabilities where applicable.
+* No hardcoded secrets or credentials.
+
+### Database Requirements
+
+Create all necessary database schemas, migrations, and seed data.
+
+At minimum include:
+
+* Admin Users
+* Bookings
+* System Settings
+
+### Code Quality Requirements
+
+* Clean and maintainable code.
+* Modular architecture.
+* Reusable components.
+* Proper folder structure.
+* Clear naming conventions.
+* Production-ready implementation standards.
+
+### Deployment Requirements
+
+Ensure the project can be deployed easily on a VPS with minimal configuration.
+
+Provide:
+
+* Environment configuration examples.
+* Database initialization scripts.
+* PM2 configuration.
+* Nginx configuration example.
+* Deployment instructions.
+* Backup and restore recommendations.
+
+### Final Audit
+
+After implementation is complete, perform a comprehensive audit covering:
+
+1. Security Audit
+2. Authentication Audit
+3. Database Audit
+4. API Audit
+5. UI/UX Audit
+6. Performance Audit
+7. Mobile Responsiveness Audit
+8. Accessibility Audit
+9. Error Handling Audit
+10. Deployment Readiness Audit
+
+Generate a detailed audit report identifying:
+
+* Issues found
+* Risk level
+* Recommended fixes
+* Overall production readiness score
+
+The final deliverable should be a fully functional, secure, scalable, and production-ready booking management system that integrates seamlessly with the existing website while preserving its current design quality and user experience.

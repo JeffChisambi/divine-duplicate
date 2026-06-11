@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Search, CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useState, useEffect, useRef, useCallback, type ReactNode, type CSSProperties } from "react";
+import { createBooking } from "../server/bookings";
 
 import { toast } from "sonner";
 import heroSvg from "@/assets/hero.svg";
@@ -102,7 +103,7 @@ interface RevealProps {
   threshold?: number;
   className?: string;
   style?: CSSProperties;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 function useInView(threshold = 0.15) {
@@ -236,7 +237,7 @@ function Index() {
 
   const WHATSAPP_NUMBER = "27780389060";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Honeypot — bots fill hidden fields, humans don't
@@ -267,8 +268,21 @@ function Index() {
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines)}`;
     window.open(url, "_blank", "noopener,noreferrer");
-
     toast.success("Opening WhatsApp — your booking is ready to send!");
+
+    // Save to database in the background (non-blocking)
+    createBooking({
+      data: {
+        firstName: form.firstName,
+        phone: form.phone,
+        email: form.email || undefined,
+        service: form.service,
+        date: form.date,
+        time: form.time || "TBC",
+        notes: form.notes || undefined,
+      },
+    }).catch((err) => console.error("[booking save]", err));
+
     setForm({ firstName: "", phone: "", email: "", service: "", date: "", time: "", notes: "" });
   };
 

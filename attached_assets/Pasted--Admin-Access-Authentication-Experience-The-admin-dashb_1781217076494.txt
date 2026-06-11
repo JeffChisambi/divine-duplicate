@@ -1,0 +1,53 @@
+### Admin Access & Authentication Experience
+
+The admin dashboard should not be publicly accessible through the website navigation, footer, or any visible customer-facing links.
+
+Instead, create a dedicated admin route:
+
+`/admin`
+
+Example:
+
+* Public Website: `https://nailsalon.com`
+* Admin Dashboard: `https://nailsalon.com/admin`
+
+The `/admin` route should be known only to the business owner and authorized staff. However, do not rely on URL obscurity for security. Implement proper authentication and authorization controls.
+
+#### Login Requirements
+
+* Create a professional login page that matches the website's branding, colors, typography, and design language.
+* The login page should feel like a premium extension of the main website rather than a generic admin panel.
+* Protect all dashboard routes from unauthorized access.
+* Redirect unauthenticated users to the login page.
+* Use bcrypt for password hashing.
+* Implement secure session management using JWT authentication.
+* Add login rate limiting to prevent brute-force attacks.
+* Support secure logout functionality.
+* Include password change functionality within the dashboard settings.
+* Store no plaintext passwords.
+
+#### Default Administrator Setup
+
+* Create a default administrator account during initial setup.
+* Allow the administrator to change their password after first login.
+* Store administrator credentials securely in the database.
+
+#### Future Scalability
+
+Structure the authentication and user management system so it can easily support multiple staff accounts and role-based permissions in the future without major refactoring.
+
+#### Security Audit Requirements
+
+As part of the final audit, specifically verify:
+
+* Authentication security
+* Password storage security
+* Session security
+* Route protection
+* API authorization
+* Brute-force protection
+* Security headers
+* Environment variable management
+* Exposure of sensitive data
+
+Provide recommendations for any vulnerabilities discovered and resolve all critical or high-risk issues before considering the system production-ready.

@@ -1,0 +1,1 @@
+- [Admin dashboard architecture](admin-dashboard.md) — PostgreSQL + bcrypt + session-token auth, TanStack Start server functions, all admin routes under /admin/*.
