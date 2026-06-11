@@ -17,7 +17,7 @@ function checkRateLimit(key: string): boolean {
 }
 
 export const loginAdmin = createServerFn({ method: 'POST' })
-  .validator((data: { username: string; password: string }) => data)
+  .inputValidator((data: { username: string; password: string }) => data)
   .handler(async ({ data }) => {
     await initDb()
     if (!checkRateLimit(data.username)) {
@@ -37,7 +37,7 @@ export const loginAdmin = createServerFn({ method: 'POST' })
   })
 
 export const validateSession = createServerFn({ method: 'POST' })
-  .validator((data: { token: string }) => data)
+  .inputValidator((data: { token: string }) => data)
   .handler(async ({ data }) => {
     if (!data.token) return { valid: false as const }
     await initDb()
@@ -55,7 +55,7 @@ export const validateSession = createServerFn({ method: 'POST' })
   })
 
 export const logoutAdmin = createServerFn({ method: 'POST' })
-  .validator((data: { token: string }) => data)
+  .inputValidator((data: { token: string }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await query('DELETE FROM sessions WHERE id = $1', [data.token])
@@ -63,7 +63,7 @@ export const logoutAdmin = createServerFn({ method: 'POST' })
   })
 
 export const changePassword = createServerFn({ method: 'POST' })
-  .validator((data: { token: string; oldPassword: string; newPassword: string }) => data)
+  .inputValidator((data: { token: string; oldPassword: string; newPassword: string }) => data)
   .handler(async ({ data }) => {
     await initDb()
     const { rows: sessions } = await query<{ admin_id: number }>(

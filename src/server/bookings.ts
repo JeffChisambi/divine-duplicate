@@ -11,7 +11,7 @@ async function requireAuth(token: string): Promise<number> {
 }
 
 export const createBooking = createServerFn({ method: 'POST' })
-  .validator((data: {
+  .inputValidator((data: {
     firstName: string; phone: string; email?: string; service: string
     date: string; time: string; notes?: string
   }) => data)
@@ -26,7 +26,7 @@ export const createBooking = createServerFn({ method: 'POST' })
   })
 
 export const getBookings = createServerFn({ method: 'POST' })
-  .validator((data: {
+  .inputValidator((data: {
     token: string; search?: string; status?: string; service?: string
     date?: string; sortBy?: 'newest'|'oldest'|'upcoming'|'status'
     page?: number; pageSize?: number
@@ -56,7 +56,7 @@ export const getBookings = createServerFn({ method: 'POST' })
   })
 
 export const updateBookingStatus = createServerFn({ method: 'POST' })
-  .validator((data: { token: string; id: number; status: BookingStatus }) => data)
+  .inputValidator((data: { token: string; id: number; status: BookingStatus }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await requireAuth(data.token)
@@ -66,7 +66,7 @@ export const updateBookingStatus = createServerFn({ method: 'POST' })
   })
 
 export const deleteBooking = createServerFn({ method: 'POST' })
-  .validator((data: { token: string; id: number }) => data)
+  .inputValidator((data: { token: string; id: number }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await requireAuth(data.token)
@@ -75,7 +75,7 @@ export const deleteBooking = createServerFn({ method: 'POST' })
   })
 
 export const getBookingStats = createServerFn({ method: 'POST' })
-  .validator((data: { token: string }) => data)
+  .inputValidator((data: { token: string }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await requireAuth(data.token)
@@ -88,7 +88,7 @@ export const getBookingStats = createServerFn({ method: 'POST' })
   })
 
 export const getBookingsByDate = createServerFn({ method: 'POST' })
-  .validator((data: { token: string; year: number; month: number }) => data)
+  .inputValidator((data: { token: string; year: number; month: number }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await requireAuth(data.token)
@@ -102,7 +102,7 @@ export const getBookingsByDate = createServerFn({ method: 'POST' })
   })
 
 export const getBookingsForDay = createServerFn({ method: 'POST' })
-  .validator((data: { token: string; date: string }) => data)
+  .inputValidator((data: { token: string; date: string }) => data)
   .handler(async ({ data }) => {
     await initDb()
     await requireAuth(data.token)

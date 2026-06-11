@@ -9,6 +9,8 @@ export default defineConfig({
     tsconfigPaths(),
     tailwindcss(),
     tanstackStart({
+      client: { entry: "src/entry-client.tsx" },
+      start:  { entry: "src/start.ts" },
       server: { entry: "src/server.ts" },
     }),
     react(),
