@@ -405,11 +405,11 @@ function Index() {
 
         <div className="relative px-6 md:px-10 pb-16">
           <h1
-            className="absolute top-[14%] left-0 right-0 text-white pointer-events-none leading-[0.9] tracking-tight z-10 hero-title-animate"
-            style={{ fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: "clamp(70px, 13vw, 210px)", paddingLeft: "8vw" }}
+            className="absolute top-[14%] left-0 right-0 text-white pointer-events-none leading-[0.9] tracking-tight z-10 hero-title-animate text-center md:text-left md:pl-[8vw]"
+            style={{ fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: "clamp(52px, 13vw, 210px)" }}
           >
             <span className="block">Your Nails,</span>
-            <span className="block text-right pr-[8vw]">Perfected.</span>
+            <span className="block md:text-right md:pr-[8vw]">Perfected.</span>
           </h1>
 
           <div className="relative z-0 flex justify-center pt-8 hero-image-animate">
@@ -480,7 +480,7 @@ function Index() {
           {/* Right: staggered card grid */}
           <div>
             {/* Top 2 — featured cards, second one offset down for editorial stagger */}
-            <div className="grid grid-cols-2 gap-4 mb-4 items-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 items-start">
               {services.slice(0, 2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={i * 100} as="article"
                   className="flex flex-col overflow-hidden transition hover:shadow-lg"
@@ -500,7 +500,7 @@ function Index() {
             </div>
 
             {/* Bottom 4 — compact cards in a row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
               {services.slice(2).map((s, i) => (
                 <Reveal key={s.n} variant="up" delay={200 + i * 70} as="article"
                   className="flex flex-col overflow-hidden border transition hover:shadow-md hover:-translate-y-0.5"
